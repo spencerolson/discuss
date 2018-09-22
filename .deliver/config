@@ -2,24 +2,17 @@ APP="discuss"
 
 BUILD_HOST="spencerolson.org"
 BUILD_USER="solson"
-BUILD_AT="/tmp/edeliver/$APP/builds"
-
-RELEASE_DIR="/tmp/edeliver/$APP/builds/_build/prod/rel/$APP"
+BUILD_AT="/home/solson/app_build"
 
 # prevent re-installing node modules; this defaults to "."
 GIT_CLEAN_PATHS="_build rel priv/static"
 
-# STAGING_HOSTS="spencerolson.org"
-# STAGING_USER="solson"
-# TEST_AT="/home/deploy/staging"
-
 PRODUCTION_HOSTS="spencerolson.org"
 PRODUCTION_USER="solson"
-DELIVER_TO="/home/deploy"
+DELIVER_TO="/home/solson/app_release"
 
-# For *Phoenix* projects, symlink prod.secret.exs to our tmp source
 pre_erlang_get_and_update_deps() {
-  local _prod_secret_path="/home/prod.secret.exs"
+  local _prod_secret_path="/home/solson/app_config/prod.secret.exs"
   if [ "$TARGET_MIX_ENV" = "prod" ]; then
     __sync_remote "
       ln -sfn '$_prod_secret_path' '$BUILD_AT/config/prod.secret.exs'
