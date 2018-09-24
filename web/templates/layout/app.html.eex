@@ -49,7 +49,7 @@
 
     <footer>
       <div class="container center-align">
-        <%= link "Privacy Policy", to: privacy_policy_path(@conn, :index) %>
+        <%= link "Privacy", to: privacy_policy_path(@conn, :index) %>
       </div>
       <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     </footer>
