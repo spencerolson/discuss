@@ -23,6 +23,7 @@ defmodule Discuss.Router do
     get "/topics/:id/edit", TopicController, :edit
     put "/topics/:id/update", TopicController, :update
     delete "/topics/:id/delete", TopicController, :delete
+    get "/privacy", PrivacyPolicyController, :index
   end
 
   scope "/auth", Discuss do
