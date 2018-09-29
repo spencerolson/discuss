@@ -35,41 +35,18 @@
   </head>
   <body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-      <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+      <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600" style="margin-left: 0px; width: 100%;">
         <div class="mdl-layout__header-row">
           <span class="mdl-layout-title">Sickle</span>
           <div class="mdl-layout-spacer"></div>
         </div>
       </header>
-      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-        <header class="demo-drawer-header">
-          <img src="/images/user.jpg" class="demo-avatar">
-          <div class="demo-avatar-dropdown">
-            <span>hello@example.com</span>
-            <div class="mdl-layout-spacer"></div>
-            <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-              <i class="material-icons" role="presentation">arrow_drop_down</i>
-              <span class="visuallyhidden">Account Menu</span>
-            </button>
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-              <li class="mdl-menu__item" style="padding: 0;">
-                <%= link "Sign out", to: auth_path(@conn, :signout), class: "mdl-navigation__link", style: "display:block;width:100%;height:100%;padding:10px;line-height:45px;" %>
-              </li>
-            </ul>
-          </div>
-        </header>
 
-        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-          <a class="mdl-navigation__link" href="/"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
-          <div class="mdl-layout-spacer"></div>
-          <a class="mdl-navigation__link" href="<%= privacy_policy_path(@conn, :index) %>"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">lock</i>Privacy </a>
-        </nav>
-      </div>
-
-      <main class="mdl-layout__content mdl-color--grey-100">
-        <div class="demo-content">
-          <%= render @view_module, @view_template, assigns %>
-        </div>
+      <main style="padding: 15px;">
+        <button style="padding: 10px;">
+          <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+          <a href="<%= auth_path(@conn, :request, "google") %>" style="text-decoration: none; color: black; padding-left: 5px;">Sign in with Google</a>
+        </button>
       </main>
     </div>
 

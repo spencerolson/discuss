@@ -1,8 +1,13 @@
 defmodule Discuss.AuthController do
   use Discuss.Web, :controller
   plug Ueberauth
+  plug :put_layout, false when action in [:index]
 
   alias Discuss.User
+
+  def index(conn, _params) do
+    render conn, "index.html"
+  end
 
   def callback(conn, %{"provider" => provider}) do
     %{assigns: %{ueberauth_auth: auth}} = conn
