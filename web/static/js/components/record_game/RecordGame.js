@@ -161,7 +161,6 @@ export default class RecordGame extends React.Component {
   }
 
   render() {
-    console.log('totals are', Object.values(this.state.playerData).map(o => o.total))
     return (
       <div>
         <AppBar position="static">
@@ -206,33 +205,11 @@ export default class RecordGame extends React.Component {
           }
         </div>
 
-        <div>
-          {(this.state.selectedTab !== 0) &&
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.handlePreviousTab}
-            >
-              Back
-            </Button>
-          }
-
-          {(this.state.selectedTab !== this.numberOfTabs()) &&
-            <Button
-              style={{ float: 'right' }}
-              variant="contained"
-              color="primary"
-              onClick={this.handleNextTab}
-            >
-              Next
-            </Button>
-          }
-
+        <div style={{ display: 'flex' }}>
           {(this.state.selectedTab === this.numberOfTabs()) &&
             <Button
-              style={{ float: 'right' }}
               variant="contained"
-              color="secondary"
+              color="primary"
               onClick={this.handleSubmit}
             >
               Submit
