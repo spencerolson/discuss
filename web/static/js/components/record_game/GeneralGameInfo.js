@@ -89,6 +89,7 @@ export default class GeneralGameInfo extends React.Component {
         <FormControl style={{ margin: '10px' }}>
           <InputLabel htmlFor="player-select">Structure Bonus Tile</InputLabel>
           <Select
+            native
             value={this.props.structureBonusTile.name}
             onChange={this.props.handleStructureBonusTileChanged}
             style={{ width: '200px' }}
