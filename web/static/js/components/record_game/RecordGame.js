@@ -54,7 +54,7 @@ export default class RecordGame extends React.Component {
       { name: 'onTunnels', text: 'On Tunnels', min: 0,  max: 4, scoring: { 0: 0, 1: 2, 2: 4, 3: 6, 4: 6 } }
     ]
     const users = { 14: { id: '14', name: "John" }, 23: { id: '23', name: "Danny" }, 17: { id: '17', name: "Tim" }, 93: { id: '93', name: "Spencer" } }
-    this.state = { playerCount: 3, selectedTab: 4, structureBonusTile: { name: '', text: 'Structure Bonus Tile Count', min: 0, max: 7, scoring: {} }, playerData, users, structureBonusTiles }
+    this.state = { playerCount: 3, selectedTab: 0, structureBonusTile: { name: '', text: 'Structure Bonus Tile Count', min: 0, max: 7, scoring: {} }, playerData, users, structureBonusTiles }
   }
 
   handleChange = (event, value) => {
