@@ -18,7 +18,7 @@ export default class SummaryTab extends React.Component {
       <List component="nav">
         {
           rankedPlayers.map((player, index) => (
-            <ListItem button>
+            <ListItem key={`ranked_player_${index}`} button>
               { index === 0 &&
                 <ListItemIcon>
                   <StarIcon />

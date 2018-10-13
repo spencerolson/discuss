@@ -171,51 +171,53 @@ export default class RecordGame extends React.Component {
           </Tabs>
         </AppBar>
 
-        <div style={{ height: '100%' }}>
-          {this.state.selectedTab === 0 &&
-            <TabContainer>
-              <GeneralGameInfo
-                handlePlayerCountChanged={this.handlePlayerCountChanged}
-                handleStructureBonusTileChanged={this.handleStructureBonusTileChanged}
-                playerCount={this.state.playerCount}
-                structureBonusTiles={this.state.structureBonusTiles}
-                structureBonusTile={this.state.structureBonusTile}
-              />
-            </TabContainer>
-          }
 
-          {(this.state.selectedTab === this.numberOfTabs()) &&
-            <TabContainer>
-              <SummaryTab playerData={this.activePlayers()}/>
-            </TabContainer>
-          }
+          <div style={{ height: '100%' }}>
+            {this.state.selectedTab === 0 &&
+              <TabContainer>
+                <GeneralGameInfo
+                  handlePlayerCountChanged={this.handlePlayerCountChanged}
+                  handleStructureBonusTileChanged={this.handleStructureBonusTileChanged}
+                  playerCount={this.state.playerCount}
+                  structureBonusTiles={this.state.structureBonusTiles}
+                  structureBonusTile={this.state.structureBonusTile}
+                />
+              </TabContainer>
+            }
 
-          {(this.state.selectedTab !== 0) && (this.state.selectedTab !== this.numberOfTabs()) &&
-            <TabContainer>
-              <PlayerInfo
-                calculateTotal={this.calculateTotal}
-                multipliers={this.multipliers}
-                handlePlayerDataChange={this.handlePlayerDataChange}
-                playerData={this.state.playerData[this.state.selectedTab]}
-                selectedTab={this.state.selectedTab}
-                users={Object.values(this.state.users)}
-                structureBonusTile={this.state.structureBonusTile}
-              />
-            </TabContainer>
-          }
-        </div>
+            {(this.state.selectedTab === this.numberOfTabs()) &&
+              <TabContainer>
+                <SummaryTab playerData={this.activePlayers()}/>
+              </TabContainer>
+            }
 
-        <div style={{ display: 'flex' }}>
-          {(this.state.selectedTab === this.numberOfTabs()) &&
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.handleSubmit}
-            >
-              Submit
-            </Button>
-          }
-        </div>
+            {(this.state.selectedTab !== 0) && (this.state.selectedTab !== this.numberOfTabs()) &&
+              <TabContainer>
+                <PlayerInfo
+                  calculateTotal={this.calculateTotal}
+                  multipliers={this.multipliers}
+                  handlePlayerDataChange={this.handlePlayerDataChange}
+                  playerData={this.state.playerData[this.state.selectedTab]}
+                  selectedTab={this.state.selectedTab}
+                  users={Object.values(this.state.users)}
+                  structureBonusTile={this.state.structureBonusTile}
+                />
+              </TabContainer>
+            }
+
+            {(this.state.selectedTab !== this.numberOfTabs()) &&
+              <Button style={{ padding: '10px 45px' }} onClick={this.handleNextTab}>Next</Button>
+            }
+            {(this.state.selectedTab === this.numberOfTabs()) &&
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleSubmit}
+              >
+                Submit
+              </Button>
+            }
+          </div>
       </div>
     )
   }

@@ -77,7 +77,7 @@ export default class GeneralGameInfo extends React.Component {
   render() {
     return (
       <div>
-        <div style={{ padding: '10px', width: '250px' }}>
+        <div style={{ padding: '10px 20px', width: '250px' }}>
           <Typography style={{ padding: '10px 0' }} id="player-count-label">{this.props.playerCount} Players</Typography>
           <StepSlider
             handlePlayerCountChanged={this.props.handlePlayerCountChanged}
@@ -86,7 +86,7 @@ export default class GeneralGameInfo extends React.Component {
           />
         </div>
 
-        <FormControl style={{ margin: '10px' }}>
+        <FormControl style={{ margin: '10px 20px' }}>
           <InputLabel htmlFor="player-select">Structure Bonus Tile</InputLabel>
           <Select
             native
@@ -103,7 +103,7 @@ export default class GeneralGameInfo extends React.Component {
           </Select>
         </FormControl>
 
-        <div style={{ padding: '10px', width: '200px' }}>
+        <div style={{ padding: '10px 20px', width: '200px' }}>
           <DatePicker />
         </div>
       </div>

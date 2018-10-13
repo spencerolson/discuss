@@ -89,7 +89,7 @@ export default class PlayerInfo extends React.Component {
     return (
       <div>
         <div>
-          <FormControl style={{ margin: '10px 0' }}>
+          <FormControl style={{ margin: '10px 20px' }}>
             <InputLabel htmlFor="player-select">Player</InputLabel>
             <Select
               native
@@ -108,7 +108,7 @@ export default class PlayerInfo extends React.Component {
         </div>
 
         <div>
-          <FormControl style={{ margin: '10px 0' }}>
+          <FormControl style={{ margin: '10px 20px' }}>
             <InputLabel htmlFor="faction-select">Faction</InputLabel>
             <Select
               native
@@ -132,7 +132,7 @@ export default class PlayerInfo extends React.Component {
           </FormControl>
 
 
-          <div style={{ padding: '10px 0px', width: '250px' }}>
+          <div style={{ padding: '10px 20px', width: '250px' }}>
             <Typography style={{ padding: '10px 0' }} id="popularity-label">Popularity: {data.popularity}</Typography>
               <Slider
                 value={data.popularity}
@@ -143,7 +143,7 @@ export default class PlayerInfo extends React.Component {
               />
           </div>
 
-          <div style={{ padding: '10px 0px', width: '250px' }}>
+          <div style={{ padding: '10px 20px', width: '250px' }}>
             <Typography style={{ padding: '10px 0' }} id="stars-label">
               Stars: {data.stars} {this.starsCalc()}
             </Typography>
@@ -156,7 +156,7 @@ export default class PlayerInfo extends React.Component {
               />
           </div>
 
-          <div style={{ padding: '10px 0px', width: '250px' }}>
+          <div style={{ padding: '10px 20px', width: '250px' }}>
             <Typography style={{ padding: '10px 0' }} id="territories-label">
               Territories: {data.territories} {this.territoriesCalc()}
             </Typography>
@@ -169,7 +169,7 @@ export default class PlayerInfo extends React.Component {
               />
           </div>
 
-          <div style={{ padding: '10px 0px', width: '250px' }}>
+          <div style={{ padding: '10px 20px', width: '250px' }}>
             <Typography style={{ padding: '10px 0' }} id="pairsOfResources-label">
               Pairs of Resources: {data.pairsOfResources} {this.pairsOfResourcesCalc()}
             </Typography>
@@ -182,7 +182,7 @@ export default class PlayerInfo extends React.Component {
               />
           </div>
 
-          <div style={{ padding: '10px 0px', width: '250px' }}>
+          <div style={{ padding: '10px 20px', width: '250px' }}>
             <Typography style={{ padding: '10px 0' }} id="structureBonusCount-label">
               {displayStructureText}: {data.structureBonusCount} {this.structureBonusCalc()}
             </Typography>
@@ -195,7 +195,7 @@ export default class PlayerInfo extends React.Component {
               />
           </div>
 
-          <div style={{ padding: '10px 0px', width: '250px' }}>
+          <div style={{ padding: '10px 20px', width: '250px' }}>
             <Typography style={{ padding: '10px 0' }} id="coinsInHand-label">Coins in Hand: {data.coinsInHand}</Typography>
             <Slider
               value={data.coinsInHand}
@@ -206,7 +206,7 @@ export default class PlayerInfo extends React.Component {
             />
           </div>
 
-          <div style={{ padding: '10px 0px', width: '250px' }}>
+          <div style={{ padding: '10px 20px', width: '250px' }}>
             <Typography variant="h5" component="h3">
               Total: ${data.total}
             </Typography>
