@@ -35,6 +35,7 @@ export default class RecordGame extends React.Component {
         id: '',
         name: `Player ${i}`,
         faction: '',
+        playerMat: '',
         popularity: 0,
         stars: 0,
         territories: 0,

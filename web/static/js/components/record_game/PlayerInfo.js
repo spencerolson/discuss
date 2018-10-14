@@ -28,6 +28,10 @@ class PlayerInfo extends React.Component {
     this.props.handlePlayerDataChange(this.props.selectedTab, "faction", value)
   }
 
+  handlePlayerMatChange = ({ target: { value } }) => {
+    this.props.handlePlayerDataChange(this.props.selectedTab, "playerMat", value)
+  }
+
   handlePopularityChange = (event, value) => {
     this.props.handlePlayerDataChange(this.props.selectedTab, "popularity", value)
   }
@@ -141,20 +145,45 @@ class PlayerInfo extends React.Component {
               <option value="togawa">Togawa</option>
             </Select>
           </FormControl>
+        </div>
+
+        <div>
+          <FormControl style={{ margin: '10px 20px' }}>
+            <InputLabel htmlFor="faction-select">Player Mat</InputLabel>
+            <Select
+              native
+              value={data.playerMat}
+              onChange={this.handlePlayerMatChange}
+              style={{ width: '200px' }}
+              inputProps={{
+                faction: 'playerMat',
+                id: 'playerMat-select',
+              }}
+            >
+              <option value="" disabled/>
+                  <option value="agricultural">Agricultural</option>
+                  <option value="engineering">Engineering</option>
+                  <option value="industrial">Industrial</option>
+                  <option value="innovative">Innovative</option>
+                  <option value="mechanical">Mechanical</option>
+                  <option value="militant">Militant</option>
+                  <option value="patriotic">Patriotic</option>
+            </Select>
+          </FormControl>
+        </div>
 
 
-          <Slider min={0} max={8} value={data.popularity} onChange={this.handlePopularityChange} label="Popularity" postLabel="" id="popularity-label" />
-          <Slider min={0} max={6} value={data.stars} onChange={this.handleStarsChange} label="Stars" postLabel={this.starsCalc()} id="stars-label" />
-          <Slider min={0} max={25} value={data.territories} onChange={this.handleTerritoriesChange} label="Territories" postLabel={this.territoriesCalc()} id="territories-label" />
-          <Slider min={0} max={20} value={data.pairsOfResources} onChange={this.handlePairsOfResourcesChange} label="Pairs of Resources" postLabel={this.pairsOfResourcesCalc()} id="pairsOfResources-label" />
-          <Slider min={this.props.structureBonusTile.min} max={this.props.structureBonusTile.max} value={data.structureBonusCount} onChange={this.handleStructureBonusCountChange} label={displayStructureText} postLabel={this.structureBonusCalc()} id="structureBonusCount-label" />
-          <Slider min={0} max={100} value={data.coinsInHand} onChange={this.handleCoinsInHandChange} label="Coins in Hand" postLabel="" id="coinsInHand-label" />
+        <Slider min={0} max={8} value={data.popularity} onChange={this.handlePopularityChange} label="Popularity" postLabel="" id="popularity-label" />
+        <Slider min={0} max={6} value={data.stars} onChange={this.handleStarsChange} label="Stars" postLabel={this.starsCalc()} id="stars-label" />
+        <Slider min={0} max={25} value={data.territories} onChange={this.handleTerritoriesChange} label="Territories" postLabel={this.territoriesCalc()} id="territories-label" />
+        <Slider min={0} max={20} value={data.pairsOfResources} onChange={this.handlePairsOfResourcesChange} label="Pairs of Resources" postLabel={this.pairsOfResourcesCalc()} id="pairsOfResources-label" />
+        <Slider min={this.props.structureBonusTile.min} max={this.props.structureBonusTile.max} value={data.structureBonusCount} onChange={this.handleStructureBonusCountChange} label={displayStructureText} postLabel={this.structureBonusCalc()} id="structureBonusCount-label" />
+        <Slider min={0} max={100} value={data.coinsInHand} onChange={this.handleCoinsInHandChange} label="Coins in Hand" postLabel="" id="coinsInHand-label" />
 
-          <div style={{ padding: '10px 20px', width: '250px' }}>
-            <Typography variant="h5" component="h3">
-              Total: ${data.total}
-            </Typography>
-          </div>
+        <div style={{ padding: '10px 20px', width: '250px' }}>
+          <Typography variant="h5" component="h3">
+            Total: ${data.total}
+          </Typography>
         </div>
       </div>
     )
