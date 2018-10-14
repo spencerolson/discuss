@@ -164,7 +164,7 @@ export default class RecordGame extends React.Component {
     return (
       <div>
         <AppBar position="static">
-          <Tabs value={this.state.selectedTab} onChange={this.handleChange}>
+          <Tabs value={this.state.selectedTab} onChange={this.handleChange} scrollable scrollButtons="auto">
             <Tab key="general" label="General" />
             {this.renderPlayerTabs()}
             <Tab key="summary" label="Summary" />
