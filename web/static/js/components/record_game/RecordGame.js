@@ -210,8 +210,7 @@ export default class RecordGame extends React.Component {
             }
             {(this.state.selectedTab === this.numberOfTabs()) &&
               <Button
-                variant="contained"
-                color="primary"
+                style={{ padding: '24px' }}
                 onClick={this.handleSubmit}
               >
                 Submit

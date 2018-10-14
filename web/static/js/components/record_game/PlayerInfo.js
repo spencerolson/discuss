@@ -1,15 +1,25 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import { withStyles } from '@material-ui/core/styles'
+import classNames from 'classnames'
+
 import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
-import Slider from '@material-ui/lab/Slider'
 import Typography from '@material-ui/core/Typography'
 import Tooltip from '@material-ui/core/Tooltip'
-import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 
-export default class PlayerInfo extends React.Component {
+import Slider from './Slider'
+
+const styles = {
+  sliderThumb: {
+    height: '18px',
+    width: '18px'
+  },
+};
+
+class PlayerInfo extends React.Component {
   handlePlayerChange = ({ target: { value } }) => {
     this.props.handlePlayerDataChange(this.props.selectedTab, "id", value)
   }
@@ -133,91 +143,12 @@ export default class PlayerInfo extends React.Component {
           </FormControl>
 
 
-          <div style={{ padding: '10px 20px', width: '250px' }}>
-            <Typography style={{ padding: '10px 0' }} id="popularity-label">Popularity: {data.popularity}</Typography>
-              <Slider
-                value={data.popularity}
-                min={0}
-                max={18}
-                step={1}
-                onChange={this.handlePopularityChange}
-              />
-
-            <TextField
-              id="standard-number"
-              label="Popularity"
-              value={data.popularity}
-              onChange={this.handlePopularityChange}
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              margin="normal"
-            />
-          </div>
-
-          <div style={{ padding: '10px 20px', width: '250px' }}>
-            <Typography style={{ padding: '10px 0' }} id="stars-label">
-              Stars: {data.stars} {this.starsCalc()}
-            </Typography>
-              <Slider
-                value={data.stars}
-                min={0}
-                max={6}
-                step={1}
-                onChange={this.handleStarsChange}
-              />
-          </div>
-
-          <div style={{ padding: '10px 20px', width: '250px' }}>
-            <Typography style={{ padding: '10px 0' }} id="territories-label">
-              Territories: {data.territories} {this.territoriesCalc()}
-            </Typography>
-              <Slider
-                value={data.territories}
-                min={0}
-                max={25}
-                step={1}
-                onChange={this.handleTerritoriesChange}
-              />
-          </div>
-
-          <div style={{ padding: '10px 20px', width: '250px' }}>
-            <Typography style={{ padding: '10px 0' }} id="pairsOfResources-label">
-              Pairs of Resources: {data.pairsOfResources} {this.pairsOfResourcesCalc()}
-            </Typography>
-              <Slider
-                value={data.pairsOfResources}
-                min={0}
-                max={20}
-                step={1}
-                onChange={this.handlePairsOfResourcesChange}
-              />
-          </div>
-
-          <div style={{ padding: '10px 20px', width: '250px' }}>
-            <Typography style={{ padding: '10px 0' }} id="structureBonusCount-label">
-              {displayStructureText}: {data.structureBonusCount} {this.structureBonusCalc()}
-            </Typography>
-              <Slider
-                value={data.structureBonusCount}
-                min={this.props.structureBonusTile.min}
-                max={this.props.structureBonusTile.max}
-                step={1}
-                onChange={this.handleStructureBonusCountChange}
-              />
-          </div>
-
-          <div style={{ padding: '10px 20px', width: '250px' }}>
-            <Typography style={{ padding: '10px 0' }} id="coinsInHand-label">Coins in Hand: {data.coinsInHand}</Typography>
-            <Slider
-              value={data.coinsInHand}
-              min={0}
-              max={100}
-              step={1}
-              onChange={this.handleCoinsInHandChange}
-            />
-          </div>
+          <Slider min={0} max={8} value={data.popularity} onChange={this.handlePopularityChange} label="Popularity" postLabel="" id="popularity-label" />
+          <Slider min={0} max={6} value={data.stars} onChange={this.handleStarsChange} label="Stars" postLabel={this.starsCalc()} id="stars-label" />
+          <Slider min={0} max={25} value={data.territories} onChange={this.handleTerritoriesChange} label="Territories" postLabel={this.territoriesCalc()} id="territories-label" />
+          <Slider min={0} max={20} value={data.pairsOfResources} onChange={this.handlePairsOfResourcesChange} label="Pairs of Resources" postLabel={this.pairsOfResourcesCalc()} id="pairsOfResources-label" />
+          <Slider min={this.props.structureBonusTile.min} max={this.props.structureBonusTile.max} value={data.structureBonusCount} onChange={this.handleStructureBonusCountChange} label={displayStructureText} postLabel={this.structureBonusCalc()} id="structureBonusCount-label" />
+          <Slider min={0} max={100} value={data.coinsInHand} onChange={this.handleCoinsInHandChange} label="Coins in Hand" postLabel="" id="coinsInHand-label" />
 
           <div style={{ padding: '10px 20px', width: '250px' }}>
             <Typography variant="h5" component="h3">
@@ -230,3 +161,4 @@ export default class PlayerInfo extends React.Component {
   }
 }
 
+export default withStyles(styles)(PlayerInfo)

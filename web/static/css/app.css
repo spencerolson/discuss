@@ -217,3 +217,8 @@ _:-ms-input-placeholder, :root .demo-graph {
       -ms-flex-align: center;
           align-items: center;
 }
+
+.scytheSlider {
+  height: 80px;
+  width: 80px;
+}
