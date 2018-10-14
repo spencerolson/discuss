@@ -6,6 +6,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Slider from '@material-ui/lab/Slider'
 import Typography from '@material-ui/core/Typography'
 import Tooltip from '@material-ui/core/Tooltip'
+import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 
 export default class PlayerInfo extends React.Component {
@@ -141,6 +142,18 @@ export default class PlayerInfo extends React.Component {
                 step={1}
                 onChange={this.handlePopularityChange}
               />
+
+            <TextField
+              id="standard-number"
+              label="Popularity"
+              value={data.popularity}
+              onChange={this.handlePopularityChange}
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              margin="normal"
+            />
           </div>
 
           <div style={{ padding: '10px 20px', width: '250px' }}>
