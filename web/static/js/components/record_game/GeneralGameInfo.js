@@ -1,29 +1,13 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { withStyles } from '@material-ui/core/styles'
-import Slider from '@material-ui/lab/Slider'
+import Slider from './Slider'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Moment from 'moment'
 import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
-
-class StepSlider extends React.Component {
-  render() {
-    return (
-      <div>
-        <Slider
-          value={this.props.playerCount}
-          min={2}
-          max={7}
-          step={1}
-          onChange={this.props.handlePlayerCountChanged}
-        />
-      </div>
-    );
-  }
-}
 
 function DatePicker() {
   return (
@@ -77,15 +61,7 @@ export default class GeneralGameInfo extends React.Component {
   render() {
     return (
       <div>
-        <div style={{ padding: '10px 20px', width: '250px' }}>
-          <Typography style={{ padding: '10px 0' }} id="player-count-label">{this.props.playerCount} Players</Typography>
-          <StepSlider
-            handlePlayerCountChanged={this.props.handlePlayerCountChanged}
-            playerCount={this.props.playerCount}
-            aria-labelledby="player-count-label"
-          />
-        </div>
-
+        <Slider value={this.props.playerCount} min={2} max={7} onChange={this.props.handlePlayerCountChanged} id="player-count-label" label="Players" postLabel="" />
         <FormControl style={{ margin: '10px 20px' }}>
           <InputLabel htmlFor="player-select">Structure Bonus Tile</InputLabel>
           <Select
