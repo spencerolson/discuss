@@ -6,6 +6,8 @@ import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
+import Axios from 'axios'
+import Moment from 'moment'
 
 import GeneralGameInfo from "./GeneralGameInfo"
 import PlayerInfo from './PlayerInfo'
@@ -55,12 +57,49 @@ export default class RecordGame extends React.Component {
       { name: 'onTunnels', text: 'On Tunnels', min: 0,  max: 4, scoring: { 0: 0, 1: 2, 2: 4, 3: 6, 4: 6 } }
     ]
     const users = { 14: { id: '14', name: "John" }, 23: { id: '23', name: "Danny" }, 17: { id: '17', name: "Tim" }, 93: { id: '93', name: "Spencer" } }
-    this.state = { playerCount: 3, selectedTab: 0, structureBonusTile: { name: '', text: 'Structure Bonus Tile Count', min: 0, max: 7, scoring: {} }, playerData, users, structureBonusTiles }
+    this.state = { date: Moment().format("YYYY-MM-DD"), playerCount: 3, selectedTab: 0, submitting: false, structureBonusTile: { name: '', text: 'Structure Bonus Tile Count', min: 0, max: 7, scoring: {} }, playerData, users, structureBonusTiles }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.submitting && this.state.submitting){
+      this.submitGame()
+    }
+  }
+
+  submitGame = () => {
+    const { date, playerCount, structureBonusTile, playerData } = this.state
+    const comparePlayers = (a, b) => {
+      if (a.total > b.total) return -1
+      if (a.total < b.total) return 1
+      return 0
+    }
+    const winner = Object.values(this.state.playerData).sort(comparePlayers)[0].id
+    const data = {
+      game: { player_count: playerCount, structure_bonus_tile: structureBonusTile.name, winner, date },
+      player_data: playerData
+    }
+
+    Axios({
+      method: 'post',
+      headers: { "x-csrf-token": this.props.csrfToken },
+      url: '/games',
+      data
+    }).then((response) => {
+      console.log('success! response is: ', response)
+    }).catch((error) => {
+      console.log('error! error is: ', error)
+    }).finally(() => {
+      this.setState({ submitting: false })
+    })
   }
 
   handleChange = (event, value) => {
     this.setState({ selectedTab: value });
   };
+
+  handleDateChanged = ({ target: { value } }) => {
+    this.setState({ date: value })
+  }
 
   handleNextTab = () => {
     this.setState({ selectedTab: this.state.selectedTab + 1 })
@@ -94,6 +133,7 @@ export default class RecordGame extends React.Component {
   }
 
   handleSubmit = () => {
+    this.setState({ submitting: true })
   }
 
   numberOfTabs = () => {
@@ -177,6 +217,7 @@ export default class RecordGame extends React.Component {
             {this.state.selectedTab === 0 &&
               <TabContainer>
                 <GeneralGameInfo
+                  handleDateChanged={this.handleDateChanged}
                   handlePlayerCountChanged={this.handlePlayerCountChanged}
                   handleStructureBonusTileChanged={this.handleStructureBonusTileChanged}
                   playerCount={this.state.playerCount}
@@ -210,12 +251,13 @@ export default class RecordGame extends React.Component {
               <Button style={{ padding: '10px 45px' }} onClick={this.handleNextTab}>Next</Button>
             }
             {(this.state.selectedTab === this.numberOfTabs()) &&
-              <Button
-                style={{ padding: '24px' }}
-                onClick={this.handleSubmit}
-              >
-                Submit
-              </Button>
+              <div style={{ padding: '30px' }}>
+                <Button
+                  onClick={this.handleSubmit} disabled={this.state.submitting}
+                >
+                  Submit
+                </Button>
+              </div>
             }
           </div>
       </div>

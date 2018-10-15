@@ -18,12 +18,12 @@ defmodule Discuss.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/login", AuthController, :index
-    get "/", TopicController, :index
-    get "/topics/new", TopicController, :new
-    post "/topics", TopicController, :create
-    get "/topics/:id/edit", TopicController, :edit
-    put "/topics/:id/update", TopicController, :update
-    delete "/topics/:id/delete", TopicController, :delete
+    get "/", GameController, :index
+    get "/games/new", GameController, :new
+    post "/games", GameController, :create
+    get "/games/:id/edit", GameController, :edit
+    put "/games/:id/update", GameController, :update
+    delete "/games/:id/delete", GameController, :delete
     get "/privacy", PrivacyPolicyController, :index
   end
 

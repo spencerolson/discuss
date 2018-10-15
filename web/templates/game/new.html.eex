@@ -1,4 +1,4 @@
-<!-- <%= form_for @changeset, topic_path(@conn, :create), fn f -> %>
+<!-- <%= form_for @changeset, game_path(@conn, :create), fn f -> %>
   <div class="form-group">
     <%= text_input f, :title, placeholder: "Title", class: "form-control" %>
     <%= error_tag f, :title %>
@@ -7,4 +7,4 @@
   <%= submit "Save Topic", class: "btn btn-primary" %>
 <% end %> -->
 
-<div id="record-game"></div>
+<div id="record-game" data-token="<%= @token %>"></div>

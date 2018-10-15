@@ -9,7 +9,7 @@ import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 
-function DatePicker() {
+function DatePicker(props) {
   return (
     <form noValidate>
       <TextField
@@ -17,6 +17,7 @@ function DatePicker() {
         label="Date"
         type="date"
         defaultValue={Moment().format("YYYY-MM-DD")}
+        onChange={props.handleDateChanged}
         InputLabelProps={{
           shrink: true,
         }}
@@ -80,7 +81,7 @@ export default class GeneralGameInfo extends React.Component {
         </FormControl>
 
         <div style={{ padding: '10px 20px', width: '200px' }}>
-          <DatePicker />
+          <DatePicker handleDateChanged={this.props.handleDateChanged} />
         </div>
       </div>
     )

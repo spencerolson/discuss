@@ -1,0 +1,22 @@
+<h3>Games</h3>
+
+<ul class="collection">
+<%= for game <- @games do %>
+  <li class="collection-item">
+    <%= game.title %>
+
+    <%= if @conn.assigns.user && @conn.assigns.user.id == game.user_id do %>
+      <div class="right">
+        <%= link "Edit", to: game_path(@conn, :edit, game) %>
+        <%= link "Delete", to: game_path(@conn, :delete, game), method: :delete %>
+      </div>
+    <% end %>
+  </li>
+<% end %>
+</ul>
+
+<div class="fixed-action-btn">
+  <%= link to: game_path(@conn, :new), class: "mdl-button mdl-js-button mdl-button--fab mdl-button--colored" do %>
+    <i class="material-icons">add</i>
+  <% end %>
+</div>
