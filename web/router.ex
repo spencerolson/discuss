@@ -12,6 +12,8 @@ defmodule Discuss.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug Discuss.Plugs.SetUser
   end
 
   scope "/", Discuss do
@@ -20,11 +22,13 @@ defmodule Discuss.Router do
     get "/login", AuthController, :index
     get "/", GameController, :index
     get "/games/new", GameController, :new
-    post "/games", GameController, :create
+    get "/games/:id", GameController, :show
     get "/games/:id/edit", GameController, :edit
     put "/games/:id/update", GameController, :update
     delete "/games/:id/delete", GameController, :delete
     get "/privacy", PrivacyPolicyController, :index
+    get "/users/:id/edit", UserController, :edit
+    put "/users/:id/update", UserController, :update
   end
 
   scope "/auth", Discuss do
@@ -35,8 +39,11 @@ defmodule Discuss.Router do
     get "/:provider/callback", AuthController, :callback
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Discuss do
-  #   pipe_through :api
-  # end
+   # Other scopes may use custom stacks.
+   scope "/api", Discuss do
+     pipe_through :api
+
+     post "/games", GameController, :create
+     get "/users", UserController, :index
+   end
 end

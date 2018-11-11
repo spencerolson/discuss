@@ -2,13 +2,15 @@ defmodule Discuss.GameController do
   use Discuss.Web, :controller
 
   alias Discuss.Game
+  alias Discuss.User
+  alias Discuss.Player
 
-  plug Discuss.Plugs.RequireAuth when action in [:index, :new, :create, :edit, :update, :delete]
+  plug Discuss.Plugs.RequireAuth when action in [:index, :new, :edit, :update, :delete]
   plug :check_game_owner when action in [:update, :edit, :delete]
 
   def index(conn, _params) do
     games = Repo.all(Game)
-    render conn, "index.html", games: games
+    render conn, "index.html", games: games |> Repo.preload([:user, :winner])
   end
 
   def new(conn, _params) do
@@ -16,17 +18,39 @@ defmodule Discuss.GameController do
     render conn, "new.html", changeset: changeset, token: get_csrf_token()
   end
 
+  def show(conn, %{"id" => game_id}) do
+    game = Repo.get(Game, game_id) |> Repo.preload([:user, :winner, :players])
+    render conn, "show.html", game: game
+  end
+
   def create(conn, %{"game" => game, "player_data" => player_data}) do
+    [year, month, day] = String.split(game["date"], "-") |> Enum.map(&String.to_integer/1)
+    {:ok, date} = NaiveDateTime.new(year, month, day, 0, 0, 0, 0)
+    game = Map.put(game, "date", date)
+    winner = Repo.get(User, game["winner_id"])
+    IO.puts "player_data"
+    IO.inspect player_data
+
     changeset = conn.assigns.user
       |> build_assoc(:games)
+      |> Ecto.Changeset.change()
+      |> Ecto.Changeset.put_assoc(:winner, winner)
       |> Game.changeset(game)
 
     case Repo.insert(changeset) do
       {:ok, game} ->
-        json conn, game
+        players = player_data
+          |> Enum.map(fn(x) ->  x |> Map.put(:inserted_at, Ecto.DateTime.utc) |> Map.put(:updated_at, Ecto.DateTime.utc) |> Map.put(:game_id, game.id) end)
+
+        Repo.insert_all("players", players)
+        render conn, "create.json", game: game
       {:error, errors} ->
-        json conn, changeset
+        render conn, "create_error.json", errors: errors
     end
+  end
+
+  def format_player(player) do
+    player |> Map.put(:inserted_at, Ecto.DateTime.utc) |> Map.put(:updated_at, Ecto.DateTime.utc)
   end
 
   def edit(conn, %{"id" => topic_id}) do

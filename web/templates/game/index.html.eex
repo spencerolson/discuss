@@ -3,13 +3,8 @@
 <ul class="collection">
 <%= for game <- @games do %>
   <li class="collection-item">
-    <%= game.title %>
-
-    <%= if @conn.assigns.user && @conn.assigns.user.id == game.user_id do %>
-      <div class="right">
-        <%= link "Edit", to: game_path(@conn, :edit, game) %>
-        <%= link "Delete", to: game_path(@conn, :delete, game), method: :delete %>
-      </div>
+    <%= link to: game_path(@conn, :show, game.id) do %>
+      <%= "#{game.date.month}-#{game.date.day}-#{game.date.year} (winner: #{game.winner.name})" %>
     <% end %>
   </li>
 <% end %>

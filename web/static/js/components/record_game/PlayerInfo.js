@@ -173,7 +173,7 @@ class PlayerInfo extends React.Component {
         </div>
 
 
-        <Slider min={0} max={8} value={data.popularity} onChange={this.handlePopularityChange} label="Popularity" postLabel="" id="popularity-label" />
+        <Slider min={0} max={18} value={data.popularity} onChange={this.handlePopularityChange} label="Popularity" postLabel="" id="popularity-label" />
         <Slider min={0} max={6} value={data.stars} onChange={this.handleStarsChange} label="Stars" postLabel={this.starsCalc()} id="stars-label" />
         <Slider min={0} max={25} value={data.territories} onChange={this.handleTerritoriesChange} label="Territories" postLabel={this.territoriesCalc()} id="territories-label" />
         <Slider min={0} max={20} value={data.pairsOfResources} onChange={this.handlePairsOfResourcesChange} label="Pairs of Resources" postLabel={this.pairsOfResourcesCalc()} id="pairsOfResources-label" />

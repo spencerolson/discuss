@@ -1,0 +1,20 @@
+<h3>Game on <%= "#{@game.date.month}-#{@game.date.day}-#{@game.date.year}" %></h3>
+
+<h4>Winner: <%= @game.winner.name %></h4>
+
+<%= for player <- @game.players do %>
+  <h5><%= "#{player.name}: #{player.faction} + #{player.player_mat}" %></h5>
+  <ul class="collection">
+    <li class="collection-item">Total: <%= player.total %></li>
+    <li class="collection-item">Stars: <%= player.stars %></li>
+    <li class="collection-item">Popularity: <%= player.popularity %></li>
+    <li class="collection-item">Coins in Hand: <%= player.coins_in_hand %></li>
+    <li class="collection-item">Territories: <%= player.territories %></li>
+    <li class="collection-item">Pairs of Resources: <%= player.pairs_of_resources %></li>
+    <li class="collection-item"><%= @game.structure_bonus_tile %>: <%= player.pairs_of_resources %></li>
+  </ul>
+<% end %>
+
+<%= link to: game_path(@conn, :index) do %>
+  Back
+<% end %>

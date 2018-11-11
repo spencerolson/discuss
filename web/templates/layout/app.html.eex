@@ -44,13 +44,16 @@
         <header class="demo-drawer-header">
           <img src="/images/user.jpg" class="demo-avatar">
           <div class="demo-avatar-dropdown">
-            <span>spence1818@gmail.com</span>
+            <span><%= @conn.assigns.user.name || @conn.assigns.user.email%></span>
             <div class="mdl-layout-spacer"></div>
             <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
               <i class="material-icons" role="presentation">arrow_drop_down</i>
               <span class="visuallyhidden">Account Menu</span>
             </button>
             <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+              <li class="mdl-menu__item" style="padding: 0;">
+                <%= link "Preferences", to: user_path(@conn, :edit, @conn.assigns.user.id), class: "mdl-navigation__link", style: "display:block;width:100%;height:100%;padding:10px;line-height:45px;" %>
+              </li>
               <li class="mdl-menu__item" style="padding: 0;">
                 <%= link "Sign out", to: auth_path(@conn, :signout), class: "mdl-navigation__link", style: "display:block;width:100%;height:100%;padding:10px;line-height:45px;" %>
               </li>

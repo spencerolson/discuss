@@ -56,8 +56,30 @@ export default class RecordGame extends React.Component {
       { name: 'onFarmsOrTundras', text: 'On Farms or Tundras', min: 0, max: 4, scoring: { 0: 0, 1: 2, 2: 4, 3: 6, 4: 9 } },
       { name: 'onTunnels', text: 'On Tunnels', min: 0,  max: 4, scoring: { 0: 0, 1: 2, 2: 4, 3: 6, 4: 6 } }
     ]
-    const users = { 14: { id: '14', name: "John" }, 23: { id: '23', name: "Danny" }, 17: { id: '17', name: "Tim" }, 93: { id: '93', name: "Spencer" } }
-    this.state = { date: Moment().format("YYYY-MM-DD"), playerCount: 3, selectedTab: 0, submitting: false, structureBonusTile: { name: '', text: 'Structure Bonus Tile Count', min: 0, max: 7, scoring: {} }, playerData, users, structureBonusTiles }
+    const users = {}
+    this.state = { usersLoaded: false, date: Moment().format("YYYY-MM-DD"), playerCount: 3, selectedTab: 0, submitting: false, structureBonusTile: { name: '', text: 'Structure Bonus Tile Count', min: 0, max: 7, scoring: {} }, playerData, users, structureBonusTiles }
+  }
+
+  componentDidMount() {
+    if (this.state.usersLoaded) {
+      return;
+    }
+
+    Axios({
+      method: 'get',
+      headers: { "x-csrf-token": this.props.csrfToken },
+      url: '/api/users'
+    }).then(({data: users}) => {
+      const userMap = users.reduce((obj, user) => {
+        obj[user.id] = user
+        user.name = user.name || user.email
+        return obj
+      }, {})
+      this.setState({users: userMap, usersLoaded: true})
+    }).catch((error) => {
+      console.log('error fetching users! error is: ', error)
+      this.setState({usersLoaded: true})
+    })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -67,29 +89,44 @@ export default class RecordGame extends React.Component {
   }
 
   submitGame = () => {
-    const { date, playerCount, structureBonusTile, playerData } = this.state
+    const { date, playerCount, structureBonusTile } = this.state
     const comparePlayers = (a, b) => {
       if (a.total > b.total) return -1
       if (a.total < b.total) return 1
       return 0
     }
-    const winner = Object.values(this.state.playerData).sort(comparePlayers)[0].id
+    const winner = Object.values(this.activePlayers()).sort(comparePlayers)[0].id
+
     const data = {
-      game: { player_count: playerCount, structure_bonus_tile: structureBonusTile.name, winner, date },
-      player_data: playerData
+      game: { player_count: playerCount, structure_bonus_tile: structureBonusTile.text, winner_id: winner, date },
+      player_data: this.activePlayers().map(player => (
+        {
+          coins_in_hand: parseInt(player.coinsInHand),
+          faction: player.faction.charAt(0).toUpperCase() + player.faction.slice(1),
+          user_id: parseInt(player.id),
+          name: player.name,
+          pairs_of_resources: parseInt(player.pairsOfResources),
+          player_mat: player.playerMat.charAt(0).toUpperCase() + player.playerMat.slice(1),
+          popularity: parseInt(player.popularity),
+          stars: parseInt(player.stars),
+          structure_bonus_count: parseInt(player.structureBonusCount),
+          territories: parseInt(player.territories),
+          total: parseInt(player.total)
+        }
+      ))
     }
 
     Axios({
       method: 'post',
       headers: { "x-csrf-token": this.props.csrfToken },
-      url: '/games',
+      url: '/api/games',
       data
     }).then((response) => {
       console.log('success! response is: ', response)
     }).catch((error) => {
       console.log('error! error is: ', error)
     }).finally(() => {
-      this.setState({ submitting: false })
+      window.location = "/"
     })
   }
 
@@ -201,7 +238,20 @@ export default class RecordGame extends React.Component {
     return panels
   }
 
+  playersComplete() {
+    return this.activePlayers().every((player) => (
+      player.id && player.faction && player.playerMat && player.total
+    ))
+  }
+
+  disableSubmit() {
+    return this.state.submitting || !this.state.structureBonusTile.name || !this.playersComplete()
+  }
+
   render() {
+    if (this.state.usersLoading) {
+      return <p>Loading...</p>
+    }
     return (
       <div>
         <AppBar position="static">
@@ -253,7 +303,7 @@ export default class RecordGame extends React.Component {
             {(this.state.selectedTab === this.numberOfTabs()) &&
               <div style={{ padding: '30px' }}>
                 <Button
-                  onClick={this.handleSubmit} disabled={this.state.submitting}
+                  onClick={this.handleSubmit} disabled={this.disableSubmit()}
                 >
                   Submit
                 </Button>
